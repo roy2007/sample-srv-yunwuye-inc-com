@@ -17,8 +17,8 @@ import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yunwuye.sample.common.CommonConst;
-import com.yunwuye.sample.common.enums.BiddingDocFrameNodeType;
 import com.yunwuye.sample.common.enums.NodeType;
+import com.yunwuye.sample.common.enums.TreeNodeType;
 import com.yunwuye.sample.common.utils.ListUtil;
 
 /**
@@ -132,7 +132,7 @@ public enum BaseNodeTreeHelper {
         if (indexChildrenVO == null) {
           continue;
         }
-        if (indexChildrenVO.getType().equals(BiddingDocFrameNodeType.DOCUMENT.getCode())) {
+        if (indexChildrenVO.getType().equals(TreeNodeType.DOCUMENT.getCode())) {
           NodeRelationVO nodeRelationVO = convertNodeRelationVO(indexChildrenVO);
           if (nodeRelationVO != null) {
             nodeRelationVO.setSerialNum((byte) (i + 1));
@@ -248,7 +248,7 @@ public enum BaseNodeTreeHelper {
     log.info("-----sort after---\r\n childList{}", JSON.toJSONString(childListVOs));
 
     for (BaseNode childvo : childListVOs) {
-      if (childvo.getSelfNodeId() == null || childvo.getType().equals(BiddingDocFrameNodeType.DOCUMENT.getCode())) {
+      if (childvo.getSelfNodeId() == null || childvo.getType().equals(TreeNodeType.DOCUMENT.getCode())) {
         continue;
       }
       childvo.setChildren(getChild(childvo.getSelfNodeId(), allVOs));

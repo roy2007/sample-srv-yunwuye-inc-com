@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
-import com.yunwuye.sample.common.enums.BiddingDocFrameNodeType;
+import com.yunwuye.sample.common.enums.TreeNodeType;
 
 /**
  *
@@ -23,11 +23,11 @@ public class BaseNodeTreeHelperTest {
   List<BaseNode> treeList = new ArrayList<>();
 
   private void setProperty(BaseNode vo11, String name) {
-    vo11.setCreator("wb491327");
+    vo11.setCreator("214234234");
     vo11.setFrameId(1000L);
     vo11.setName(name);
     vo11.setGmtCreate(new Date());
-    vo11.setType(BiddingDocFrameNodeType.TITLE.getCode());
+    vo11.setType(TreeNodeType.TITLE.getCode());
   }
 
   /**

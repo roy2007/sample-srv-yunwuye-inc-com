@@ -7,7 +7,7 @@ import com.yunwuye.sample.common.utils.BaseEnumUtils;
  *
  * @date 2020年7月5日-上午11:42:35
  */
-public enum BiddingDocFrameNodeType implements BaseEnum<String> {
+public enum TreeNodeType implements BaseEnum<String> {
 
   TITLE("1", "标题"), DOCUMENT("2", "文档"),
   ;
@@ -26,7 +26,7 @@ public enum BiddingDocFrameNodeType implements BaseEnum<String> {
    * @param code
    * @param desc
    */
-  private BiddingDocFrameNodeType(String code, String desc) {
+  private TreeNodeType(String code, String desc) {
     this.code = code;
     this.desc = desc;
   }
@@ -34,7 +34,7 @@ public enum BiddingDocFrameNodeType implements BaseEnum<String> {
   /**
    * 根据code获得枚举
    */
-  public static BiddingDocFrameNodeType getByCode(String code) {
+  public static TreeNodeType getByCode(String code) {
     return BaseEnumUtils.getByCode(code, values());
   }
 
