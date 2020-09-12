@@ -66,6 +66,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
    * @param annotationMetadata
    * @param beanDefinitionRegistry
    */
+  @SuppressWarnings("rawtypes")
   @Override
   public void registerBeanDefinitions(AnnotationMetadata annotationMetadata,
       BeanDefinitionRegistry beanDefinitionRegistry) {
@@ -118,6 +119,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
    * @param typeStr
    * @return
    */
+  @SuppressWarnings("unchecked")
   private Class<? extends DataSource> getDataSourceType(String typeStr) {
     Class<? extends DataSource> type;
     try {
@@ -140,14 +142,15 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
    * @param result
    * @param properties
    */
-  private void bind(DataSource result, Map properties) {
+  @SuppressWarnings("unused")
+  private void bind(DataSource result, Map<?, ?> properties) {
     ConfigurationPropertySource source = new MapConfigurationPropertySource(properties);
     Binder binder = new Binder(new ConfigurationPropertySource[] { source.withAliases(aliases) });
     // 将参数绑定到对象
     binder.bind(ConfigurationPropertyName.EMPTY, Bindable.ofInstance(result));
   }
 
-  private <T extends DataSource> T bind(Class<T> clazz, Map properties) {
+  private <T extends DataSource> T bind(Class<T> clazz, Map<?, ?> properties) {
     ConfigurationPropertySource source = new MapConfigurationPropertySource(properties);
     Binder binder = new Binder(new ConfigurationPropertySource[] { source.withAliases(aliases) });
     // 通过类型绑定参数并获得实例对象
@@ -161,8 +164,9 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
    * @param <T>
    * @return
    */
+  @SuppressWarnings("unused")
   private <T extends DataSource> T bind(Class<T> clazz, String sourcePath) {
-    Map properties = binder.bind(sourcePath, Map.class).get();
+    Map<?, ?> properties = binder.bind(sourcePath, Map.class).get();
     return bind(clazz, properties);
   }
 
