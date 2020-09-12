@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dynamic
+
+  redis:
+    #数据库索引
+    database: 0
+    host: 127.0.0.1
+    # port: 16379
+    port: 6379
+    # password: fghjkl;123
+    password:
+    #连接超时时间
+    timeout: 5000
+
+  dubbo:
+   server: true
+   application:
+    name: provider
+   registry:
+    address: zookeeper://127.0.0.1:2181
+    simplified: true
+    packageName: com.yunwuye.sample.service.impl
+   timeout: 3000
+   protocol:
+    name: dubbo
+    #host: 192.168.3.50
+    port: 20881
+   scan: com.yunwuye.sample.service.impl
+   #provider:
+    #filter: catTransaction
+
+thread:
+  name:
+    prefix: sample-asyn-pool-task-1
+  pool:
+    max:
+      pool:
+        size: 40
+    queue:
+      capacity: 
+        size: 10
+    keep:
+      alive:
+        seconds: 3
+

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.12.RELEASE</version>
+  </parent>
+
+  <groupId>com.yunwuye.sample</groupId>
+  <artifactId>sample-srv-yunwuye-inc-com</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <spring-boot.version>2.1.12.RELEASE</spring-boot.version>
+    <dubbo.version>2.6.0</dubbo.version>
+    <dubbo-spring.version>2.0.0</dubbo-spring.version>
+    <druid.version>1.1.10</druid.version>
+    <log4jdbc.version>1.16</log4jdbc.version>
+    <!-- <mysql-connector.version>8.0.15</mysql-connector.version> -->
+    <mysql-connector.version>5.1.6</mysql-connector.version>
+    <swagger2.version>2.9.2</swagger2.version>
+    <fastjson.version>1.2.67</fastjson.version>
+    <test.version>4.11</test.version>
+    <guava.version>23.0</guava.version>
+    <httpmime.version>4.4</httpmime.version>
+    <httpclient.version>4.5.2</httpclient.version>
+    <httpcore.version>4.4.1</httpcore.version>
+    <commons-lang3.version>3.4</commons-lang3.version>
+    <commons-lang.version>2.6</commons-lang.version>
+    <quartz.version>2.1.4</quartz.version>
+    <commons-httpclient.version>3.1</commons-httpclient.version>
+    <!-- <apache.dubbo.version>2.7.6</apache.dubbo.version> -->
+    <zookeeper.version>3.5.5</zookeeper.version>
+    <zkclient.version>0.11</zkclient.version>
+    <spring-boot-starter-jdbc.version>2.2.5.RELEASE</spring-boot-starter-jdbc.version>
+    <sample.project.version>1.0.0-SNAPSHOT</sample.project.version>
+    <mybatis-spring-boot.version>1.3.2</mybatis-spring-boot.version>
+    <pagehelper.version>1.2.3</pagehelper.version>
+    <lombo.version>1.16.18</lombo.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.zaxxer</groupId>
+          <artifactId>HikariCP</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.yunwuye.sample</groupId>
+        <artifactId>sample-srv-yunwuye-inc-com-common</artifactId>
+        <version>${sample.project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.yunwuye.sample</groupId>
+        <artifactId>sample-srv-yunwuye-inc-com-client</artifactId>
+        <version>${sample.project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.yunwuye.sample</groupId>
+        <artifactId>sample-srv-yunwuye-inc-com-domain</artifactId>
+        <version>${sample.project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.yunwuye.sample</groupId>
+        <artifactId>sample-srv-yunwuye-inc-com-mybatis</artifactId>
+        <version>${sample.project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.yunwuye.sample</groupId>
+        <artifactId>sample-srv-yunwuye-inc-com-service</artifactId>
+        <version>${sample.project.version}</version>
+      </dependency>
+
+      <!--dubbo 依赖 -->
+      <dependency>
+        <groupId>com.alibaba.spring.boot</groupId>
+        <artifactId>dubbo-spring-boot-starter</artifactId>
+        <version>${dubbo-spring.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo</artifactId>
+        <version>${dubbo.version}</version>
+      </dependency>
+
+      <!-- Spring Boot Mybatis 依赖 -->
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>${mybatis-spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-jdbc</artifactId>
+        <version>${spring-boot-starter-jdbc.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombo.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper.version}</version>
+      </dependency>
+
+      <!--Swagger-UI API文档生产工具 -->
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger2</artifactId>
+        <version>${swagger2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger-ui</artifactId>
+        <version>${swagger2.version}</version>
+      </dependency>
+
+      <!--集成druid连接池 -->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid-spring-boot-starter</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
+
+      <!--Mysql driver -->
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql-connector.version}</version>
+      </dependency>
+
+      <!--监控sql日志 -->
+      <dependency>
+        <groupId>org.bgee.log4jdbc-log4j2</groupId>
+        <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+        <version>${log4jdbc.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>${commons-lang.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpcore</artifactId>
+        <version>${httpcore.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpclient.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpmime</artifactId>
+        <version>${httpmime.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-httpclient</groupId>
+        <artifactId>commons-httpclient</artifactId>
+        <version>${commons-httpclient.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.quartz-scheduler</groupId>
+        <artifactId>quartz</artifactId>
+        <version>${quartz.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${test.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- <dependency> <groupId>org.apache.dubbo</groupId> <artifactId>dubbo</artifactId> 
+        <version>${dubbo.version}</version> </dependency> <dependency> <groupId>org.apache.dubbo</groupId> 
+        <artifactId>dubbo-dependencies-zookeeper</artifactId> <version>${dubbo.version}</version> 
+        <type>pom</type> </dependency> -->
+
+      <!-- zeekeeper注册中心 -->
+      <dependency>
+        <groupId>org.apache.zookeeper</groupId>
+        <artifactId>zookeeper</artifactId>
+        <version>${zookeeper.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.101tec</groupId>
+        <artifactId>zkclient</artifactId>
+        <version>${zkclient.version}</version>
+      </dependency>
+
+      <!-- word op jar -->
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>3.17</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>3.17</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-scratchpad</artifactId>
+        <version>3.17</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>ooxml-schemas</artifactId>
+        <version>1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml-schemas</artifactId>
+        <version>3.17</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlbeans</groupId>
+        <artifactId>xmlbeans</artifactId>
+        <version>2.6.0</version>
+      </dependency>
+      <dependency>
+        <groupId>dom4j</groupId>
+        <artifactId>dom4j</artifactId>
+        <version>1.6.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-core</artifactId>
+        <version>1.3.7</version>
+        <scope>test</scope>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <modules>
+    <module>sample-srv-yunwuye-inc-com-start</module>
+    <module>sample-srv-yunwuye-inc-com-domain</module>
+    <module>sample-srv-yunwuye-inc-com-client</module>
+    <module>sample-srv-yunwuye-inc-com-service</module>
+    <module>sample-srv-yunwuye-inc-com-mybatis</module>
+    <module>sample-srv-yunwuye-inc-com-common</module>
+  </modules>
+</project>

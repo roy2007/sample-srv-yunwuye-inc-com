@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!--   <properties resource="db.properties"></properties> -->
+  <settings>
+    <!-- 打印查询语句 -->
+    <setting name="logImpl" value="STDOUT_LOGGING" />
+    <!-- 控制全局缓存（二级缓存） -->
+    <setting name="cacheEnabled" value="true" />
+    <!-- 延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。默认 false -->
+    <setting name="lazyLoadingEnabled" value="true" />
+    <!-- 当开启时，任何方法的调用都会加载该对象的所有属性。默认 false，可通过select标签的 fetchType来覆盖 -->
+    <setting name="aggressiveLazyLoading" value="false" />
+    <!-- Mybatis 创建具有延迟加载能力的对象所用到的代理工具，默认JAVASSIST -->
+    <!--<setting name="proxyFactory" value="CGLIB" /> -->
+    <!-- STATEMENT级别的缓存，使一级缓存，只针对当前执行的这一statement有效 -->
+    <!-- <setting name="localCacheScope" value="STATEMENT"/> -->
+    <setting name="localCacheScope" value="SESSION" />
+  </settings>
+
+  <!--<typeAliases> <typeAlias alias="accountUser" type="com.yunwuye.sample.dal.entity.AccountUser" 
+    /> </typeAliases> <typeHandlers> <typeHandler handler="com.yunwuye.sample.dal.handler.MyStringTypeHandler"></typeHandler> 
+    </typeHandlers> -->
+
+  <!-- 对象工厂 -->
+  <!-- <objectFactory type="com.yunwuye.sample.dal.handler.MyObjectFactory"> 
+    <property name="age" value="666"/> </objectFactory> -->
+
+  <!-- <plugins> <plugin interceptor="com.yunwuye.sample.dal.handler.SqlInterceptorPlugin"> 
+    <property name="someProperty" value="10101" /> </plugin> <plugin interceptor="xxxxxx.MyPageInterceptor"> 
+    </plugin> </plugins> -->
+
+  <environments default="development">
+    <environment id="development">
+      <!-- 如果配置的是JDBC，则会使用Connection 对象的commit()、rollback()、close()管理事务。 
+        如果配置成MANAGED，会把事务交给容器来管理，比如JBOSS，Weblogic。 因为我们跑的是本地程序，如果配置成MANAGE不会有任何事务。如果是Spring 
+        + MyBatis ， 则没有必要配置， 因为我们会直接在applicationContext.xml 里面配置数据源，覆盖MyBatis 的配置。 -->
+      <transactionManager type="JDBC" />
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/boot?serverTimezone=Asia/Shanghai&amp;characterEncoding=utf8&amp;useSSL=false" />
+        <property name="username" value="root" />
+        <property name="password" value="q1w2E#R$" />
+      </dataSource>
+    </environment>
+  </environments>
+
+  <!-- 使用相对于类路径的资源引用 -->
+  <mappers>
+    <mapper resource="mybatis/mapper/AccountUserMapper.xml" />
+    <mapper resource="mybatis/mapper/TUserMapper.xml" />
+  </mappers>
+
+  <!-- 使用完全限定资源定位符（URL） -->
+<!--   <mappers>
+    <mapper
+      url="file:///Users/Roy/workspace/sample-srv-yunwuye-inc-com-mybatis/src/main/resources/mapper/AccountUserMapper.xml" />
+    <mapper
+      url="file:///Users/Roy/workspace/sample-srv-yunwuye-inc-com-mybatis/src/main/resources/mapper/TUserMapper.xml" />
+  </mappers> -->
+  <!-- 使用映射器接口实现类的完全限定类名 -->
+  <!-- <mappers>
+    <mapper class="com.yunwuye.sample.dal.mapper.AccountUserMapper" />
+    <mapper class="com.yunwuye.sample.dal.mapper.TUserMapper" />
+  </mappers> -->
+  <!-- 将包内的映射器接口实现全部注册为映射器 -->
+<!--   <mappers>
+    <package name="com.yunwuye.sample.dal.mapper" />
+  </mappers>
+ -->
+</configuration>
