@@ -1,5 +1,7 @@
 package com.yunwuye.sample.common.base.enums;
 
+import java.text.MessageFormat;
+
 public enum CommonResultCode implements BaseEnum<String> {
     SYS_SUCCESS("200", ServiceTypeEnum.SYS, "系统服务请求成功"),
     BIZ_SUCCESS("201", ServiceTypeEnum.BIZ, "业务服务请求成功"),
@@ -62,5 +64,17 @@ public enum CommonResultCode implements BaseEnum<String> {
     @Override
     public String getDesc() {
         return resultDesc;
+    }
+
+    /**
+     * 
+     * @param params
+     * @return
+     */
+    public String formatMessageWithParameters(Object... params) {
+        if (params.length > 0 && params[0] != null) {
+            return MessageFormat.format(this.getDesc(), params);
+        }
+        return this.getDesc();
     }
 }

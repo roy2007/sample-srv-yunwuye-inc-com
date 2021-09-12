@@ -1,7 +1,8 @@
+
 package com.yunwuye.sample.common.base.result;
 
+import java.util.Arrays;
 import java.util.Map;
-
 import com.yunwuye.sample.common.ToString;
 import com.yunwuye.sample.common.base.enums.CommonResultCode;
 
@@ -11,6 +12,7 @@ import com.yunwuye.sample.common.base.enums.CommonResultCode;
  *
  */
 public class Result<T> extends ToString {
+
     private static final long serialVersionUID = 3609592334841897595L;
     /** 业务结果，请求成功 */
     private boolean success;
@@ -41,6 +43,10 @@ public class Result<T> extends ToString {
 
     public Result(boolean success, T data) {
         this.success = success;
+        this.data = data;
+    }
+
+    public Result(T data) {
         this.data = data;
     }
 
@@ -116,4 +122,46 @@ public class Result<T> extends ToString {
         this.extMap = extMap;
     }
 
+    public static <D> Result<D> with(D data) {
+        Result<D> result = new Result<>();
+        result.setData(data);
+        return result;
+    }
+
+    public static <D> Result<D> ok() {
+        return new Result<D>();
+    }
+
+    public static <D> Result<D> error(CommonResultCode errorCode, String... params) {
+        return error(errorCode.getCode(), errorCode.formatMessageWithParameters((Object[]) params));
+    }
+
+    public static <D> Result<D> error(String errorCode, String message) {
+        Result<D> result = new Result<>();
+        result.setSuccess(Boolean.FALSE);
+        result.setCode(errorCode);
+        result.setMessage(message);
+        return result;
+    }
+
+    public static <D> Result<D> sysError(String... params) {
+        if (params == null || params.length == 0) {
+            params = new String[] { "" };
+        }
+        return error(CommonResultCode.SYS_SUCCESS, params);
+    }
+
+    /**
+    * 通过错误码生成失败result
+    * 
+    *    puberrorCode
+    */
+    public void fail(CommonResultCode errorCode, Object... paramArr) {
+        this.setSuccess(Boolean.FALSE);
+        this.setCode(errorCode.getCode());
+        this.setMessage(errorCode.formatMessageWithParameters());
+        if (paramArr != null && paramArr.length > 0) {
+            this.setMessage(String.format(errorCode.formatMessageWithParameters(), Arrays.asList(paramArr).toArray()));
+        }
+    }
 }

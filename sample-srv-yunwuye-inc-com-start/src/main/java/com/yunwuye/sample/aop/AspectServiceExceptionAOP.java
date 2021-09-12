@@ -11,7 +11,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-
 import com.alibaba.fastjson.JSON;
 import com.yunwuye.sample.common.base.enums.CommonResultCode;
 import com.yunwuye.sample.common.base.exception.CommonException;
@@ -24,64 +23,65 @@ import com.yunwuye.sample.common.base.result.Result;
  * @date 2020年5月3日-下午11:02:15
  */
 @Aspect
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order (Ordered.HIGHEST_PRECEDENCE)
 @Service
-public class AspectServiceExceptionAOP {
-    private static final Logger logger = LoggerFactory.getLogger(AspectServiceExceptionAOP.class);
+public class AspectServiceExceptionAOP{
+
+    private static final Logger logger = LoggerFactory.getLogger (AspectServiceExceptionAOP.class);
 
     // 多包路径时可以通过||后面追加包路径
-    @Around("execution(* com.yunwuye.web.service.impl.*.*(..))")
-    public Object serviceLogAndException(ProceedingJoinPoint pjp) throws Throwable {
+    @Around ("execution(* com.yunwuye.web.service.impl.*.*(..))")
+    public Object serviceLogAndException (ProceedingJoinPoint pjp) throws Throwable {
         Object result = null;
-        StringBuilder sbd = new StringBuilder();
-        Long startTime = System.currentTimeMillis();
+        StringBuilder sbd = new StringBuilder ();
+        Long startTime = System.currentTimeMillis ();
         try {
-            result = pjp.proceed();
+            result = pjp.proceed ();
         } catch (Throwable t) {
-            String errorMessage = t.toString();
-            logger.error("service aop catch throwable error: {}", errorMessage);
+            String errorMessage = t.toString ();
+            logger.error ("service aop catch throwable error: {}", errorMessage);
             try {
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                TransactionAspectSupport.currentTransactionStatus ().setRollbackOnly ();
             } catch (NoTransactionException te) {
-                logger.error("NoTransactionException error: {}", te.getMessage());
-                sbd.append("NoTransactionException error |");
+                logger.error ("NoTransactionException error: {}", te.getMessage ());
+                sbd.append ("NoTransactionException error |");
             }
-            MethodSignature signature = (MethodSignature) pjp.getSignature();
-            result = signature.getReturnType().newInstance();
+            MethodSignature signature = (MethodSignature) pjp.getSignature ();
+            result = signature.getReturnType ().newInstance ();
             if (t instanceof CommonException) {
-                logger.error("CommonException error: {}", errorMessage);
+                logger.error ("CommonException error: {}", errorMessage);
                 if (result instanceof Result<?>) {
                     CommonException commonException = (CommonException) t;
-                    ((Result<?>) result).setCode(commonException.code.getCode());
-                    ((Result<?>) result).setMessage(commonException.toString());
-                    ((Result<?>) result).setSuccess(Boolean.FALSE);
+                    ((Result<?>) result).setCode (commonException.code.getCode ());
+                    ((Result<?>) result).setMessage (commonException.toString ());
+                    ((Result<?>) result).setSuccess (Boolean.FALSE);
                 }
-                sbd.append(this.getClass().getName()).append("CommonException error |").append(t.getMessage());
+                sbd.append (this.getClass ().getName ()).append ("CommonException error |").append (t.getMessage ());
             } else if (t instanceof Exception) {
-                logger.error("Exception error: {}", errorMessage);
+                logger.error ("Exception error: {}", errorMessage);
                 if (result instanceof Result<?>) {
-                    ((Result<?>) result).setCode(CommonResultCode.BIZ_SEREVICE_FAIL.getCode());
-                    ((Result<?>) result).setMessage(String.format(CommonResultCode.BIZ_SEREVICE_FAIL.getDesc(),
-                            errorMessage));
-                    ((Result<?>) result).setSuccess(Boolean.FALSE);
+                    ((Result<?>) result).setCode (CommonResultCode.BIZ_SEREVICE_FAIL.getCode ());
+                    ((Result<?>) result).setMessage (String.format (CommonResultCode.BIZ_SEREVICE_FAIL.getDesc (),
+                                    errorMessage));
+                    ((Result<?>) result).setSuccess (Boolean.FALSE);
                 }
-                sbd.append(this.getClass().getName()).append("Exception error |").append(t.getMessage());
+                sbd.append (this.getClass ().getName ()).append ("Exception error |").append (t.getMessage ());
             } else {
-                logger.error("Unknow Exception error: {}", errorMessage);
+                logger.error ("Unknow Exception error: {}", errorMessage);
                 if (result instanceof Result<?>) {
-                    ((Result<?>) result).setCode(CommonResultCode.UNFORESEEN_EXCEPTION.getCode());
-                    ((Result<?>) result).setMessage(String.format(CommonResultCode.UNFORESEEN_EXCEPTION.getDesc(),
-                            errorMessage));
-                    ((Result<?>) result).setSuccess(Boolean.FALSE);
+                    ((Result<?>) result).setCode (CommonResultCode.UNFORESEEN_EXCEPTION.getCode ());
+                    ((Result<?>) result).setMessage (String.format (CommonResultCode.UNFORESEEN_EXCEPTION.getDesc (),
+                                    errorMessage));
+                    ((Result<?>) result).setSuccess (Boolean.FALSE);
                 }
-                sbd.append(this.getClass().getName()).append("Unknow error |").append(t.getMessage());
+                sbd.append (this.getClass ().getName ()).append ("Unknow error |").append (t.getMessage ());
             }
         } finally {
-            Long elapses = System.currentTimeMillis() - startTime;
-            String interfaceName = pjp.getTarget().getClass().getInterfaces()[0].getSimpleName();
-            Object[] args = { interfaceName, pjp.getSignature(), pjp.getArgs(), JSON.toJSONString(result), elapses };
-            logger.debug("interface:{} | method:{} | param:{} | result:{} | elapses:{} ms", args);
-            sbd.delete(0, sbd.length());
+            Long elapses = System.currentTimeMillis () - startTime;
+            String interfaceName = pjp.getTarget ().getClass ().getInterfaces ()[0].getSimpleName ();
+            Object[] args = { interfaceName, pjp.getSignature (), pjp.getArgs (), JSON.toJSONString (result), elapses };
+            logger.debug ("interface:{} | method:{} | param:{} | result:{} | elapses:{} ms", args);
+            sbd.setLength (0);
         }
         return result;
     }
