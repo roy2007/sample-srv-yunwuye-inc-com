@@ -35,10 +35,18 @@ public interface StudentService extends BaseService<BaseEntity, BaseDTO>{
     public Integer batchAsyncUpdateStudentById (List<StudentDTO> dtos);
 
     /**
-     *根据id更新学生
+     * 根据id更新学生
      * 
      * @param dto
      * @return
      */
     public Integer modifyStudentById (StudentDTO dto);
+
+    /**
+     * 批量更新学生,自定义事件
+     * 
+     * @param dtos
+     * @return
+     */
+    public Integer batchUpdateStudentByIdForWithTransaction (List<StudentDTO> dtos);
 }
