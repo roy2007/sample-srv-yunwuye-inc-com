@@ -7,25 +7,21 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.annotation.Resource;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
-import com.yunwuye.sample.common.base.dto.BaseDTO;
+import com.yunwuye.sample.client.service.StudentService;
 import com.yunwuye.sample.configuration.DataSourceContext;
-import com.yunwuye.sample.dao.entity.StudentEntity;
-import com.yunwuye.sample.dao.mapper.base.BaseMapper;
-import com.yunwuye.sample.dao.mapper.cluster.StudentMapper;
+import com.yunwuye.sample.dto.BaseDTO;
 import com.yunwuye.sample.dto.StudentDTO;
 import com.yunwuye.sample.dto.UserDTO;
-import com.yunwuye.sample.entity.BaseEntity;
-import com.yunwuye.sample.service.StudentService;
-import com.yunwuye.sample.service.UserService;
+import com.yunwuye.sample.inner.IStudentInnerService;
+import com.yunwuye.sample.inner.IUserInnerService;
+import com.yunwuye.sample.result.Result;
+import com.yunwuye.sample.vo.BaseVO;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -34,44 +30,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service (group = "studentService", interfaceClass = StudentService.class, version = "1.0")
 @Component
-public class StudentServiceImpl extends BaseServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService{
 
     @Autowired
-    private StudentMapper studentMapper;
+    private IStudentInnerService       innerService;
+
+    @SuppressWarnings ("unused")
     @Autowired
     private Executor      threadPoolTaskExecutor;
 
-    @Resource
-    private UserService   userService;
+    @Autowired
+    private IUserInnerService          userInnerService;
 
+    @SuppressWarnings ("unused")
     @Autowired
     private PlatformTransactionManager transactionManager;
 
     @Override
-    protected BaseMapper<StudentEntity> getMapper () {
-        return this.studentMapper;
-    }
-
-    @Override
-    public StudentEntity asEntity (BaseDTO dto) {
-        StudentEntity e = new StudentEntity ();
-        BeanUtils.copyProperties (dto, e);
-        return e;
-    }
-
-    @Override
-    public StudentDTO asDTO (BaseEntity entity) {
-        StudentDTO dto = new StudentDTO ();
-        BeanUtils.copyProperties (entity, dto);
-        return dto;
-    }
-
-    @Override
     public StudentDTO findById (Long id) {
         DataSourceContext.setRouterKey ("second");
-        StudentEntity e = studentMapper.findByPrimaryKey (id);
-        log.info ("return StudentEntity:{}", e);
-        return asDTO (e);
+        StudentDTO dto = (StudentDTO) innerService.findByPrimaryKey (id);
+        log.info ("return StudentDTO:{}", dto);
+        return dto;
     }
 
     @Transactional (rollbackFor = Exception.class)
@@ -143,9 +123,8 @@ public class StudentServiceImpl extends BaseServiceImpl implements StudentServic
     public Integer modifyStudentById (StudentDTO dto) {
         /**如果需要切换数据源，可以打开以下代码*/
         DataSourceContext.setRouterKey ("second");
-        BaseEntity entity = asEntity (dto);
         try {
-            studentMapper.update (entity);
+            innerService.update (dto);
         } catch (Exception e) {
             e.printStackTrace ();
             throw new RuntimeException (e);
@@ -202,10 +181,10 @@ public class StudentServiceImpl extends BaseServiceImpl implements StudentServic
         return count;
     }
 
-    private void rollback (List<DefaultTransactionDefinition> transactions) {
-        for (DefaultTransactionDefinition t : transactions) {
-        }
-    }
+    // private void rollback (List<DefaultTransactionDefinition> transactions) {
+    // for (DefaultTransactionDefinition t : transactions) {
+    // }
+    // }
 
 //    private Integer modifyStudentInfoByIdForTransaction (StudentDTO dto,
 //                    DefaultTransactionDefinition defTransaction) {
@@ -225,6 +204,72 @@ public class StudentServiceImpl extends BaseServiceImpl implements StudentServic
 //    }
 
     private Integer modifyUserInfoById (UserDTO userDto) {
-        return userService.modifyUserById (userDto);
+        return userInnerService.update (userDto);
+    }
+
+    @Override
+    public BaseDTO asDTO (BaseVO VO) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public BaseVO asVO (BaseDTO dto) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Integer> insert (BaseVO VO) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Integer> update (BaseVO VO) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Integer> deleteByPrimaryKey (Long id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Integer> delete (BaseDTO dto) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<? extends BaseDTO> findByPrimaryKey (Long id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<? extends BaseDTO> findByEntity (BaseDTO dto) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<List<? extends BaseDTO>> findByList (BaseDTO dto) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<List<? extends BaseDTO>> findAll () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Object> findByObject (Object obj) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

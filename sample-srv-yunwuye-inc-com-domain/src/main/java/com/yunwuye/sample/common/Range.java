@@ -1,7 +1,7 @@
 package com.yunwuye.sample.common;
 
-import com.yunwuye.sample.common.base.annotation.FieldCNName;
-import com.yunwuye.sample.common.base.enums.CompositionTypeEnum;
+import com.yunwuye.sample.annotation.FieldCNName;
+import com.yunwuye.sample.enums.CompositionTypeEnum;
 
 /**
  * 范围字段定义

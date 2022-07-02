@@ -19,10 +19,15 @@
 ### 依赖
         ---sample-portal-yunwuye-inc-com-start    启动服务
         ---sample-portal-yunwuye-inc-com-controller    controller
+
 ### 管理控制台admin项目名称:
      项目名+admin+公司名+inc+com(sample-admin-yunwuye-inc-com)
          ---仅实现面向管理控制台的服务Controller控制器
 
-## 启动服务
+### 启动服务
          --- 通过application.yml文件配置spring属性及相关配置项。
          --- spring.profiles.active: dynamic\dev\prod 分别支持不同方式多数据源启动
+
+### 启动服务
+         --- 通过com.yunwuye.sample.dal.GeneratorCodeTest.generator()生成Mybatis Mapper及xml相关文件。
+         --- 通过application.yml文件配置spring属性及相关配置项。

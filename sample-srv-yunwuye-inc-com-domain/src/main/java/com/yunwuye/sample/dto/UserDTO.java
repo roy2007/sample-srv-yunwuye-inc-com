@@ -2,8 +2,6 @@ package com.yunwuye.sample.dto;
 
 import java.util.Date;
 
-import com.yunwuye.sample.common.base.dto.BaseDTO;
-
 /**
  *
  * @author Roy

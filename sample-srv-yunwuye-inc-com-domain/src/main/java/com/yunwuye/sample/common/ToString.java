@@ -1,8 +1,7 @@
 package com.yunwuye.sample.common;
 
 import java.io.Serializable;
-
-import com.yunwuye.sample.common.base.sensitive.ToSensitiveStringBuilder;
+import com.yunwuye.sample.sensitive.ToSensitiveStringBuilder;
 
 /**
  * @author Roy

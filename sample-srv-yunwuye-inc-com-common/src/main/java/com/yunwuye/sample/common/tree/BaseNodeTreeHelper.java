@@ -8,21 +8,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-
-import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
-
 import com.alibaba.fastjson.JSON;
 import com.yunwuye.sample.common.CommonConst;
 import com.yunwuye.sample.common.enums.NodeType;
 import com.yunwuye.sample.common.enums.TreeNodeType;
 import com.yunwuye.sample.common.utils.ListUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
+ * 同一个视图范围的树规则说明：根节点可以没有，默认是0
+ * 1.检查同视图范围内selfNodeId不能重复
+ * 2.parentNodeId不能为空，且必须等于0或同视图范围内的其他selfNodeId
+ * 3.全路径path不能为空，分隔数组后：
+ *    1).用点分隔全路径变成最短2个长度数组
+ *    1).数组第一个元素是0，最后元素必须等于parentNodeId.
+ *    2).其他元素selfNodeId，,必等于同视图范围内selfNodeId
+ * 4.同一个parentNodeId下所有子节点的serialNum不能重复
+ * 
  * @author Roy
  *
  * @date 2020年7月5日-上午11:08:42
@@ -34,7 +40,7 @@ public enum BaseNodeTreeHelper {
    */
   INSTANCE;
 
-  private static AtomicInteger AUTO_SELF_NODE_ID;
+    private static AtomicInteger AUTO_SELF_NODE_ID;
 
   /**
    * 将flatten列表（实用于数据库查询列表）转成Map<id,VO>
@@ -67,7 +73,7 @@ public enum BaseNodeTreeHelper {
    */
   public static Map<Long, BaseNode> treeDataToMap(List<BaseNode> baseNodes) {
     log.info("BaseNodeTreeHelper.treeDataToMap the parameter vos:{}", JSON.toJSONString(baseNodes));
-    AUTO_SELF_NODE_ID = new AtomicInteger(1);
+        AUTO_SELF_NODE_ID = new AtomicInteger (1);
     Map<Long, BaseNode> map = new HashMap<>();
     /**
      * 设置默认树的根是0，根的父为空
@@ -87,7 +93,7 @@ public enum BaseNodeTreeHelper {
         vo.setSerialNum((byte) i);
         i++;
         AUTO_SELF_NODE_ID.incrementAndGet();
-        treeToList(vo, allVOs);
+                treeToList (vo, allVOs);
       }
       map = flattenListDataToMap(allVOs);
     }
@@ -101,7 +107,7 @@ public enum BaseNodeTreeHelper {
    * @param list
    * @return
    */
-  private static void treeToList(BaseNode vo, List<BaseNode> list) {
+    private static void treeToList (BaseNode vo, List<BaseNode> list) {
     if (list == null) {
       list = new ArrayList<>();
     }
@@ -148,7 +154,7 @@ public enum BaseNodeTreeHelper {
         indexChildrenVO.setType(NodeType.TITLE.getCode());
         indexChildrenVO.setSerialNum((byte) (i + 1));
         AUTO_SELF_NODE_ID.incrementAndGet();
-        treeToList(indexChildrenVO, list);
+                treeToList (indexChildrenVO, list);
       }
 
       if (!CollectionUtils.isEmpty(currenNodeDocs)) {
@@ -283,4 +289,64 @@ public enum BaseNodeTreeHelper {
       }
     });
   }
+
+    public static void automicIncrementAndGet () {
+        AUTO_SELF_NODE_ID = new AtomicInteger (1);
+        for (int i = 0; i < 15; i++) {
+            System.out.println (Thread.currentThread ().getName () + "----parent------frist get--------"
+                            + AUTO_SELF_NODE_ID.get ());
+            AUTO_SELF_NODE_ID.incrementAndGet ();
+            subAutomiIncrementAnd ();
+        }
+    }
+
+    private static void subAutomiIncrementAnd () {
+        for (int i = 0; i < 5; i++) {
+            System.out.println (Thread.currentThread ().getName () + "------sub---AutomiIncrementAnd -frist get--------"
+                            + AUTO_SELF_NODE_ID.get ());
+            AUTO_SELF_NODE_ID.incrementAndGet ();
+            grandsonAutomiIncrementAnd ();
+        }
+    }
+
+    private static void grandsonAutomiIncrementAnd () {
+        for (int i = 0; i < 5; i++) {
+            System.out.println (Thread.currentThread ().getName ()
+                            + "-----------grandson---AutomiIncrementAnd -frist get--------"
+                            + AUTO_SELF_NODE_ID.get ());
+            AUTO_SELF_NODE_ID.incrementAndGet ();
+        }
+    }
+
+    public static void main (String[] args) {
+        Thread t1 = new Thread (new Runnable (){
+
+            @Override
+            public void run () {
+                for (int j = 0; j < 10; j++) {
+                    BaseNodeTreeHelper.automicIncrementAndGet ();
+                    if (j % 5 == 1) {
+                        try {
+                            Thread.sleep (100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace ();
+                        }
+                    }
+                }
+                System.out.println (Thread.currentThread ().getName () + "finish!!!!!");
+            }
+        }, "-----roys-1");
+        Thread t2 = new Thread (new Runnable (){
+
+            @Override
+            public void run () {
+                for (int j = 0; j < 10; j++) {
+                    BaseNodeTreeHelper.automicIncrementAndGet ();
+                }
+                System.out.println (Thread.currentThread ().getName () + "--------finish!!!!!");
+            }
+        }, "roys------------2");
+        t1.start ();
+        t2.start ();
+    }
 }

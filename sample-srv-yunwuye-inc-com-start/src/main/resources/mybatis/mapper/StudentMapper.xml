@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yunwuye.sample.dao.mapper.cluster.StudentMapper">
-  <resultMap id="BaseResultMap" type="com.yunwuye.sample.dao.entity.StudentEntity">
+<mapper namespace="com.yunwuye.sample.dal.mapper.ext.cluster.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.yunwuye.sample.dal.entity.ext.StudentEntity">
     <result column="id" property="id" />
     <result column="name" property="name" />
     <result column="age" property="age" />
   </resultMap>
 
-  <parameterMap id="Student"
-    type="com.yunwuye.sample.dao.entity.StudentEntity" />
+  <parameterMap id="Student" type="com.yunwuye.sample.dal.entity.ext.StudentEntity" />
 
   <sql id="Base_Column_List">
     id, name, age

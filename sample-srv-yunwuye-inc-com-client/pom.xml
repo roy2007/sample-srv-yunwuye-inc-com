@@ -22,15 +22,16 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.yunwuye.sample</groupId>
-      <artifactId>sample-srv-yunwuye-inc-com-domain</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.yunwuye.sample</groupId>
+      <artifactId>sample-srv-yunwuye-inc-com-domain</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>

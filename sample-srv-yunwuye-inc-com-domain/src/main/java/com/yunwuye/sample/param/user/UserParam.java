@@ -1,12 +1,10 @@
 package com.yunwuye.sample.param.user;
 
 import java.util.Date;
-
+import com.yunwuye.sample.param.PageParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-import com.yunwuye.sample.common.base.param.PageParam;
 
 /**
  *

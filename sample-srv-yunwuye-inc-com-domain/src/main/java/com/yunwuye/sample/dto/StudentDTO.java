@@ -1,8 +1,6 @@
 
 package com.yunwuye.sample.dto;
 
-import com.yunwuye.sample.common.base.dto.BaseDTO;
-
 /**
  * 学生表
  */

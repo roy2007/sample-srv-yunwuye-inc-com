@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import com.alibaba.fastjson.JSON;
-import com.yunwuye.sample.common.base.enums.CommonResultCode;
-import com.yunwuye.sample.common.base.exception.CommonException;
-import com.yunwuye.sample.common.base.result.Result;
+import com.yunwuye.sample.enums.CommonResultCode;
+import com.yunwuye.sample.exception.CommonException;
+import com.yunwuye.sample.result.Result;
 
 /**
  *

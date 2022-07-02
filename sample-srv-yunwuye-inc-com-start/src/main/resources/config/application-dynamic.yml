@@ -103,14 +103,14 @@ spring:
           # 打开PSCache，并且指定每个连接上PSCache的大小
           poolPreparedStatements: true
           maxPoolPreparedStatementPerConnectionSize: 20
-          # 配置监控统计拦截的filters
+          # stat：打开sql监控，wall：打开sql防火墙
           filters: stat,wall,slf4j
           # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
           connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
       stat-view-servlet:
         url-pattern: /druid/*
-        reset-enable: false
+        reset-enable: true
 
       web-stat-filter:
         url-pattern: /*
@@ -147,5 +147,6 @@ resume:
         name: wtzhaopin
 
 mybatis:
-  config-location: classpath:config/mybatis-config.xml
+  # 指定mybatis-config.xml 路径，用于配置跟mybatis相关如缓存、打印sql.不一定要在mybatis目录下
+  config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml

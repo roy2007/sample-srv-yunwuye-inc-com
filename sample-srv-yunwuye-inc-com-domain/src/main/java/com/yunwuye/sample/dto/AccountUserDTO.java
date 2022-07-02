@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import com.yunwuye.sample.common.base.dto.BaseDTO;
-
 /**
  *
  * @author Roy

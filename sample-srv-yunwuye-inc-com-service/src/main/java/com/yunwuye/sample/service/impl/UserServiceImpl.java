@@ -8,22 +8,19 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
-import com.yunwuye.sample.common.base.dto.BaseDTO;
-import com.yunwuye.sample.common.base.result.PageResult;
-import com.yunwuye.sample.common.base.result.Result;
-import com.yunwuye.sample.common.util.ResultUtil;
-import com.yunwuye.sample.dao.entity.UserEntity;
-import com.yunwuye.sample.dao.mapper.base.BaseMapper;
-import com.yunwuye.sample.dao.mapper.master.UserMapper;
+import com.yunwuye.sample.client.service.UserService;
+import com.yunwuye.sample.dto.BaseDTO;
 import com.yunwuye.sample.dto.UserDTO;
-import com.yunwuye.sample.entity.BaseEntity;
+import com.yunwuye.sample.inner.IUserInnerService;
 import com.yunwuye.sample.param.user.UserParam;
-import com.yunwuye.sample.service.UserService;
+import com.yunwuye.sample.result.PageResult;
+import com.yunwuye.sample.result.Result;
+import com.yunwuye.sample.util.ResultUtil;
+import com.yunwuye.sample.vo.BaseVO;
+import com.yunwuye.sample.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -34,48 +31,30 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service (group = "userService", interfaceClass = UserService.class, version = "1.0")
-@Component
-public class UserServiceImpl extends BaseServiceImpl implements UserService{
+public class UserServiceImpl implements UserService{
 
     @Autowired
-    private Executor   threadPoolTaskExecutor;
+    private Executor          threadPoolTaskExecutor;
+
     @Autowired
-    private UserMapper userMapper;
+    private IUserInnerService innerService;
 
     @Override
-    protected BaseMapper<UserEntity> getMapper () {
-        return this.userMapper;
-    }
-
-    @Override
-    public UserDTO getUserById (Long id) {
+    public Result<UserDTO> getUserById (Long id) {
         UserDTO userDTO = new UserDTO ();
         userDTO.setId (1000L);
         userDTO.setUsername ("roys-rui");
         userDTO.setAddress ("beijin");
         log.info ("return userDTO:{}", userDTO);
-        return userDTO;
-    }
-
-    @Override
-    public UserEntity asEntity (BaseDTO dto) {
-        UserEntity target = new UserEntity ();
-        BeanUtils.copyProperties (dto, target);
-        return target;
-    }
-
-    @Override
-    public UserDTO asDTO (BaseEntity entity) {
-        UserDTO target = new UserDTO ();
-        BeanUtils.copyProperties (entity, target);
-        return target;
+        UserDTO findedDTO = (UserDTO) innerService.findByPrimaryKey (id);
+        return Result.with (findedDTO == null ? userDTO : findedDTO);
     }
 
     @Override
     public Result<UserDTO> findById (Long id) {
-        UserEntity e = userMapper.findByPrimaryKey (id);
-        log.info ("return UserEntity:{}", e);
-        return ResultUtil.createSuccessResult (asDTO (e));
+        UserDTO findedDTO = (UserDTO) innerService.findByPrimaryKey (id);
+        log.info ("return UserEntity:{}", findedDTO);
+        return ResultUtil.createSuccessResult (findedDTO);
     }
 
     @Override
@@ -169,13 +148,72 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService{
 
     @Override
     public int modifyUserById (UserDTO userDto) {
-        BaseEntity entity = asEntity (userDto);
-        try {
-            userMapper.update (entity);
-        } catch (Exception e) {
-            e.printStackTrace ();
-            throw new RuntimeException (e);
-        }
-        return 1;
+        return innerService.update (userDto);
+    }
+
+    @Override
+    public UserDTO asDTO (BaseVO VO) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public UserVO asVO (BaseDTO dto) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Integer> update (BaseVO VO) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<List<? extends BaseDTO>> findByList (BaseDTO dto) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Integer> insert (BaseVO VO) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Integer> deleteByPrimaryKey (Long id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Integer> delete (BaseDTO dto) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<UserDTO> findByPrimaryKey (Long id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<UserDTO> findByEntity (BaseDTO dto) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<List<? extends BaseDTO>> findAll () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<Object> findByObject (Object obj) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

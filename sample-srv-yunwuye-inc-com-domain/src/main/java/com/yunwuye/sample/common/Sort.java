@@ -1,6 +1,6 @@
 package com.yunwuye.sample.common;
 
-import com.yunwuye.sample.common.base.annotation.FieldCNName;
+import com.yunwuye.sample.annotation.FieldCNName;
 
 public class Sort extends ToString {
 
