@@ -40,4 +40,5 @@ public interface UserService extends BaseService<BaseDTO, BaseVO>{
      * @return
      */
     public int modifyUserById (UserDTO userDto);
+
 }

@@ -6,7 +6,6 @@ import com.yunwuye.sample.dao.IBaseDAO;
 import com.yunwuye.sample.dao.IUserDAO;
 import com.yunwuye.sample.dto.BaseDTO;
 import com.yunwuye.sample.inner.IUserInnerService;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2022年7月2日-下午8:57:57
  */
 @Service
-@Slf4j
 public class UserInnerServiceImpl extends BaseInnerServiceImpl implements IUserInnerService{
 
     @Autowired
