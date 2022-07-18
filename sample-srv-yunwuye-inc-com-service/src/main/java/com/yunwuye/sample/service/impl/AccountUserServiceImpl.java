@@ -1,12 +1,8 @@
 package com.yunwuye.sample.service.impl;
 
 import javax.annotation.Resource;
-
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-
 import com.alibaba.dubbo.config.annotation.Service;
 import com.yunwuye.sample.common.base.result.Result;
 import com.yunwuye.sample.common.util.ResultUtil;
@@ -14,6 +10,7 @@ import com.yunwuye.sample.dal.entity.AccountUser;
 import com.yunwuye.sample.dao.AccountUserDAO;
 import com.yunwuye.sample.dto.AccountUserDTO;
 import com.yunwuye.sample.service.AccountUserService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -38,4 +35,21 @@ public class AccountUserServiceImpl implements AccountUserService {
     return ResultUtil.createSuccessResult(targetDTO);
   }
 
+    @Override
+    public Result<AccountUserDTO> findByUsername (String loginUserName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<AccountUserDTO> findOneWithAuthoritiesByEmailIgnoreCase (String loginUserName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Result<AccountUserDTO> findOneWithAuthoritiesByUsername (String lowercaseLoginUserName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

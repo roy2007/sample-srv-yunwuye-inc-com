@@ -17,4 +17,10 @@ public interface AccountUserService {
    * @return
    */
   public Result<AccountUserDTO> findById(Long id);
+
+    public Result<AccountUserDTO> findByUsername (String loginUserName);
+
+    public Result<AccountUserDTO> findOneWithAuthoritiesByEmailIgnoreCase (String loginUserName);
+
+    public Result<AccountUserDTO> findOneWithAuthoritiesByUsername (String lowercaseLoginUserName);
 }
