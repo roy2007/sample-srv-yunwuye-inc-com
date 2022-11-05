@@ -37,8 +37,8 @@ public class AccountUserServiceImpl implements AccountUserService {
 
     @Override
     public Result<AccountUserDTO> findByUsername (String loginUserName) {
-        // TODO Auto-generated method stub
-        return null;
+        log.info ("AccountUserServiceImpl.findByUsername, the parameters id: {}", loginUserName);
+        return this.findOneWithAuthoritiesByUsername (loginUserName);
     }
 
     @Override
@@ -49,7 +49,9 @@ public class AccountUserServiceImpl implements AccountUserService {
 
     @Override
     public Result<AccountUserDTO> findOneWithAuthoritiesByUsername (String lowercaseLoginUserName) {
-        // TODO Auto-generated method stub
-        return null;
+        log.info ("AccountUserServiceImpl.findOneWithAuthoritiesByUsername, the username id: {}",
+                        lowercaseLoginUserName);
+        AccountUserDTO targetDTO = dao.findByUserName (lowercaseLoginUserName);
+        return Result.with (targetDTO);
     }
 }

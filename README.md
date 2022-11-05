@@ -26,3 +26,8 @@
 ## 启动服务
          --- 通过application.yml文件配置spring属性及相关配置项。
          --- spring.profiles.active: dynamic\dev\prod 分别支持不同方式多数据源启动
+
+## 本系统外部服务依赖
+
+redis服务：
+zookeeper服务：
