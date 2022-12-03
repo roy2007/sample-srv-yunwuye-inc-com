@@ -1,9 +1,7 @@
 package com.yunwuye.sample.configuration;
 
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 // import org.mybatis.spring.annotation.MapperScan;
@@ -13,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 // import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
 import com.alibaba.druid.pool.DruidDataSource;
 
 // import com.github.pagehelper.PageInterceptor;
@@ -24,6 +21,7 @@ import com.alibaba.druid.pool.DruidDataSource;
  @date 2020年6月7日-下午7:39:28
  */
 
+@Deprecated
 // @Configuration
 // @MapperScan(basePackages = ClusterDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "clusterSqlSessionFactory")
 public class ClusterDataSourceConfig {

@@ -24,6 +24,23 @@ public class PageResult<T> extends Result<T> {
      */
     private Integer totalPage;
 
+    public PageResult () {
+        super ();
+    }
+
+    /**
+     * 
+     * @param totalSize 总条数
+     * @param pageNo 当前页
+     * @param pageSize 每页数量
+     */
+    public PageResult (Integer totalSize, Integer pageNo, Integer pageSize) {
+        this.totalSize = totalSize;
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+        this.totalPage = this.getTotalPage ();
+    }
+
     /**
      * @return the totalSize
      */
@@ -78,8 +95,18 @@ public class PageResult<T> extends Result<T> {
     /**
      * @return the totalPage
      */
-    public Integer getTotalPage() {
-        return totalPage;
+    public Integer getTotalPage () {
+        if (this.totalPage != null) {
+            return totalPage;
+        } else if (this.pageSize != null && this.totalSize != null) {
+            this.totalPage = this.totalSize / this.pageSize;
+            if (this.totalSize % this.pageSize > 0) {
+                this.totalPage = this.totalPage + 1;
+            }
+            return this.totalPage;
+        } else {
+            return 0;
+        }
     }
 
     /**

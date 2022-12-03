@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: dynamic
+    active: dev
 
   redis:
     #数据库索引
