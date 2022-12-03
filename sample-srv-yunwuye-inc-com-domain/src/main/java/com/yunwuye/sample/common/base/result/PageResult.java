@@ -42,6 +42,20 @@ public class PageResult<T> extends Result<T> {
     }
 
     /**
+     * 
+     * @param totalSize 总条数
+     * @param pageNo 当前页
+     * @param pageSize 每页数量
+     */
+    public PageResult (Integer totalSize, Integer pageNo, Integer pageSize, T data) {
+        super (data);
+        this.totalSize = totalSize;
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+        this.totalPage = this.getTotalPage ();
+    }
+
+    /**
      * @return the totalSize
      */
     public Integer getTotalSize() {

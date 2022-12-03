@@ -47,6 +47,9 @@ public class Result<T> extends ToString {
     }
 
     public Result(T data) {
+        this.code = CommonResultCode.BIZ_SUCCESS.getCode ();
+        this.message = CommonResultCode.BIZ_SUCCESS.getDesc ();
+        this.success = Boolean.TRUE;
         this.data = data;
     }
 
