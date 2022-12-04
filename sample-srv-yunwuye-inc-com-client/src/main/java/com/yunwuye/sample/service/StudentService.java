@@ -2,6 +2,7 @@ package com.yunwuye.sample.service;
 
 import java.util.List;
 import com.yunwuye.sample.common.base.dto.BaseDTO;
+import com.yunwuye.sample.common.base.result.PageResult;
 import com.yunwuye.sample.dto.StudentDTO;
 import com.yunwuye.sample.entity.BaseEntity;
 
@@ -49,4 +50,21 @@ public interface StudentService extends BaseService<BaseEntity, BaseDTO>{
      * @return
      */
     public Integer batchUpdateStudentByIdForWithTransaction (List<StudentDTO> dtos);
+
+    /**
+     * 分页按条件模糊查询列表
+     * @param dto
+     * @param offset
+     * @param limit
+     * @return
+     */
+    public PageResult<List<StudentDTO>> queryPageByCondition (StudentDTO dto, int offset, int limit);
+
+    /**
+     * 根据条件查询总条数
+     * 
+     * @param dto
+     * @return
+     */
+    public Integer countByDTO (StudentDTO dto);
 }

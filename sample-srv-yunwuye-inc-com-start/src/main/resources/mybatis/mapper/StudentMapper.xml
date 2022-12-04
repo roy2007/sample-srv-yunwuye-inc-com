@@ -37,8 +37,6 @@
     delete from t_student where id=#{id}
   </delete>
 
-
-
   <select id="findByListEntity" resultMap="BaseResultMap"
     parameterMap="Student">
     select
@@ -60,4 +58,31 @@
     <include refid="Base_Column_List" />
     from t_student where id = #{id}
   </select>
+
+<select id="countByEntity" resultType="java.lang.Integer" parameterMap="Student">
+    select count(*) from t_student where 1=1
+
+    <if test="name!=null and name!=''">
+      and name = #{name}
+    </if>
+
+    <if test="age!=null and age!=''">
+      and age = #{age}
+    </if>
+  </select>
+
+<select id="queryPageListByEntity" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_student where 1=1
+    <if test="name!=null and name!=''">
+      and name = #{name}
+    </if>
+
+    <if test="age!=null and age!=''">
+      and age = #{age}
+    </if>
+    limit #{offset}, #{limit}
+  </select>
+
 </mapper>

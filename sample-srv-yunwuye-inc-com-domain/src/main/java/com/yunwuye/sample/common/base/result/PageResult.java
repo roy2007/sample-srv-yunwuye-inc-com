@@ -5,24 +5,29 @@ package com.yunwuye.sample.common.base.result;
  * @author Roy
  *
  */
-public class PageResult<T> extends Result<T> {
+public class PageResult<T> extends Result<T>{
+
     private static final long serialVersionUID = 3478936368608723163L;
     /**
      * 总条数
      */
-    private Integer totalSize;
+    private Integer           totalSize;
     /**
      * 当前页号
      */
-    private Integer pageNo;
+    private Integer           pageNo;
     /**
      * 每页数量
      */
-    private Integer pageSize;
+    private Integer           pageSize;
     /**
      * 总页数
      */
-    private Integer totalPage;
+    private Integer           totalPage;
+    /***
+     * 偏移位置（跳过行）
+     */
+    private Integer           offset;
 
     public PageResult () {
         super ();
@@ -39,6 +44,15 @@ public class PageResult<T> extends Result<T> {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
         this.totalPage = this.getTotalPage ();
+    }
+
+    public PageResult<T> with (Integer totalSize, Integer pageSize, Integer offset, T data) {
+        this.totalSize = totalSize;
+        this.pageSize = pageSize;
+        this.offset = offset;
+        this.pageNo = this.getPageNo ();
+        this.setData (data);
+        return this;
     }
 
     /**
@@ -58,7 +72,7 @@ public class PageResult<T> extends Result<T> {
     /**
      * @return the totalSize
      */
-    public Integer getTotalSize() {
+    public Integer getTotalSize () {
         return totalSize;
     }
 
@@ -66,43 +80,52 @@ public class PageResult<T> extends Result<T> {
      * @param totalSize
      *            the totalSize to set
      */
-    public void setTotalSize(Integer totalSize) {
+    public void setTotalSize (Integer totalSize) {
         this.totalSize = totalSize;
     }
 
     /**
      * @return the pageNo
      */
-    public Integer getPageNo() {
-        if (pageNo < 1) {
-            pageNo = 1;
+    public Integer getPageNo () {
+        if (this.offset == null || offset == 0) {
+            if (this.pageNo == null || this.pageNo < 1) {
+                this.pageNo = 1;
+            }
+        } else if (this.offset != null && this.pageSize != null) {
+            this.pageNo = this.offset / this.pageSize;
+            if (this.offset % this.pageSize > 0) {
+                this.pageNo = this.pageNo + 1;
+            }
+            // 增加当前页算
+            this.pageNo = this.pageNo + 1;
         }
-        return pageNo;
+        return this.pageNo;
     }
 
     /**
      * @param pageNo
      *            the pageNo to set
      */
-    public void setPageNo(Integer pageNo) {
+    public void setPageNo (Integer pageNo) {
         this.pageNo = pageNo;
     }
 
     /**
      * @return the pageSize
      */
-    public Integer getPageSize() {
-        if(pageSize <= 0){
-            pageSize = 10;
+    public Integer getPageSize () {
+        if (this.pageSize != null && this.pageSize <= 0) {
+            this.pageSize = 10;
         }
-        return pageSize;
+        return this.pageSize;
     }
 
     /**
      * @param pageSize
      *            the pageSize to set
      */
-    public void setPageSize(Integer pageSize) {
+    public void setPageSize (Integer pageSize) {
         this.pageSize = pageSize;
     }
 
@@ -127,7 +150,21 @@ public class PageResult<T> extends Result<T> {
      * @param totalPage
      *            the totalPage to set
      */
-    public void setTotalPage(Integer totalPage) {
+    public void setTotalPage (Integer totalPage) {
         this.totalPage = totalPage;
+    }
+
+    /**
+     * @return the offset
+     */
+    public Integer getOffset () {
+        return offset;
+    }
+
+    /**
+     * @param offset the offset to set
+     */
+    public void setOffset (Integer offset) {
+        this.offset = offset;
     }
 }
