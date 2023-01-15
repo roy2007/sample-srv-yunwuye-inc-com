@@ -98,6 +98,22 @@
     </dependency>
 
     <dependency>
+       <groupId>com.aliyun.oss</groupId>
+       <artifactId>aliyun-sdk-oss</artifactId>
+       <version>3.10.2</version>
+       <exclusions>
+<!--          <exclusion>
+           <groupId>com.aliyun</groupId>
+           <artifactId>aliyun-java-sdk-core</artifactId>
+         </exclusion> -->
+         <exclusion>
+           <artifactId>commons-logging</artifactId>
+           <groupId>commons-logging</groupId>
+         </exclusion>
+       </exclusions>
+    </dependency>
+
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
@@ -349,6 +365,11 @@
         <version>5.5.8</version>
       </dependency>
 
+  <dependency>
+       <groupId>com.aliyun.oss</groupId>
+       <artifactId>aliyun-sdk-oss</artifactId>
+       <version>3.10.2</version>
+   </dependency>
     </dependencies>
   </dependencyManagement>
 
