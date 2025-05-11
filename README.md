@@ -39,6 +39,6 @@
 
 ## 本系统外部服务依赖
 
-    --- mysql: F:\mysql-5.0.67-win32(fenku)\bin>mysqld.exe --skip-grant-tables  
-    --- redis服务：
-    --- zookeeper服务：
+       --- mysql: 进入到mysql bin> mysqld.exe --skip-grant-tables
+       --- redis服务： 进入目录执行redis-server.exe redis.windows.conf
+       --- zookeeper服务：进入zookeeper bin目录，执行zkServer.cmd
