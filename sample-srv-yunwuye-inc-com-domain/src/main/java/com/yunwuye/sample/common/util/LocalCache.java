@@ -1,7 +1,3 @@
-/**
- *
- */
-
 package com.yunwuye.sample.common.util;
 
 import java.util.Map;

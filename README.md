@@ -39,5 +39,6 @@
 
 ## 本系统外部服务依赖
 
-redis服务：
-zookeeper服务：
+    --- mysql: F:\mysql-5.0.67-win32(fenku)\bin>mysqld.exe --skip-grant-tables  
+    --- redis服务：
+    --- zookeeper服务：
